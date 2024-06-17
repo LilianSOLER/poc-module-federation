@@ -1,6 +1,6 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
-import { loadRemoteModule } from '@angular-architects/module-federation';
+import {loadRemoteModule} from '@angular-architects/module-federation';
 import {
   WebComponentWrapper,
   WebComponentWrapperOptions,
@@ -36,5 +36,16 @@ export const routes: Routes = [
       exposedModule: './web-components',
       elementName: 'react-element',
     } as WebComponentWrapperOptions,
+  },
+  {
+    path: 'staffs',
+    loadChildren: () =>
+      loadRemoteModule({
+        type: 'manifest',
+        remoteName: 'mfe2',
+        exposedModule: './routes',
+      })
+        .then((m) => m.STAFFS_ROUTES)
+        .catch((err) => console.error(err)),
   },
 ];
